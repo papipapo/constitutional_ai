@@ -96,7 +96,10 @@ Here, the key challenge, other than the small sample dataset is to provide the r
 
 Key metrics in this step looked positive: entropy declined modestly which means that the model got more confident in correctly predicting the next token correctly, i.e. in line with the constitution. There was also a slight increase in mean token accuracy, meaning that the model was more likely to suggest the token with the highest probability.
 
+### Step 4 - Merging the adapter with the base model
+In step 3, we've trained an adapter that alters how the model responds to questions because it has learned how to answer more "constitutionally". 
 
+### Step 5 - Direct preference optimization (DPO)
 
 ```
 ==============================================================================
