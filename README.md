@@ -2,9 +2,16 @@
 A post-training constitutional AI pipeline 
 
 ## A — Purpose
-The abilities of modern frontier AI models are breathtaking but also raise bigger questions on model regulation and control. I was interested in learning about ways of harnessing the creative powers of AI while mitigating the risks they pose. In this process, I discovered the Constitutional AI approach 
+The abilities of modern frontier AI models are breathtaking but also raise bigger questions on model regulation and control. I was interested in learning about ways of harnessing the creative powers of AI while mitigating the risks they pose. In this process, I discovered the Constitutional AI approach pioneered by Anthropic. In a nutshell, it involves a written constitution based on human principles to align Claude's behaviors accordingly.
+
+I was fascinated by this approach and decided to write this project to learn and understand what post-training an AI model on a constitution means end-to-end and how model behaviors change in the process.
+I've used Claude in building this project.
 
 ## B — Approach
+- Starting point: my own constitution and a set of prompts to test the "articles" of my constitution.
+- Step-by-step: the process contains 8 steps in sequential order
+- Reproducibility: using easily available resources that allow for easy reproduction
+- Structure: I've added comments to each step in the code and I'm providing a summary of each step under section E.
 
 ## C — Constitution
 
