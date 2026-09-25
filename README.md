@@ -94,6 +94,10 @@ What we get in the end of this step, is an adapter that alters how our model res
 
 Here, the key challenge, other than the small sample dataset is to provide the right tuning parameters. A key one is `r`(rank) that essentially determines how deep the training exercise goes. If it's too low, the training data won't meaningfully influence the model, if it's too high, there's a risk of overfitting.
 
+Key metrics in this step looked positive: entropy declined modestly which means that the model got more confident in correctly predicting the next token correctly, i.e. in line with the constitution. There was also a slight increase in mean token accuracy, meaning that the model was more likely to suggest the token with the highest probability.
+
+
+
 ```
 ==============================================================================
 EVAL SUMMARY -- by category
