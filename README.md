@@ -87,6 +87,13 @@ There were 78 prompts in the queried that belong to 4 categories:
 
 The size of the prompt set was too small and narrow to provide generalizable answers. So this is more about whether the model changed behaviors based on the critique that it was provided.
 
+### Step 3 - Low Rank Adaptation (LoRA) based supervised fine-tuning (SFT)
+
+In this step, we're using SFT to create an adapter that can later be merged with the SmolLM2 base model. In this SFT process, we're passing both the initial and revised responses to the trainer.
+What we get in the end of this step, is an adapter that alters how our model responds to requests related to the constitution. We're passing all the responses to the trainer, those who were revised and those who remained unchanged in the critique part.
+
+Here, the key challenge, other than the small sample dataset is to provide the right tuning parameters. A key one is `r`(rank) that essentially determines how deep the training exercise goes. If it's too low, the training data won't meaningfully influence the model, if it's too high, there's a risk of overfitting.
+
 ```
 ==============================================================================
 EVAL SUMMARY -- by category
