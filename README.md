@@ -102,7 +102,13 @@ In step 3, we've trained an adapter that alters how the model responds to questi
 ### Step 5 - Direct preference optimization (DPO)
 We take the fine tuned model introduced with SFT in steps 3 and 4 as a reference. The data used is limited only to the prompts and answers where violations to the constitution were detected. So we're training the model with the rejected base responses and the revised ones. This reduced the eligible prompt-response sets to only 51.
 The results of the two training runs showed that DPO training increased the model's likelihood of picking the revised (preferred) responses over the rejected ones (rewards/margin metric). However, the rewards accuracy was 1 for both runs, meaning that the model correctly identified all preferred vs rejected responses.
-There was another interesting metric pair: Logps/chosen and Logps/rejected. These provide information where the gains in the rewards/margin metric are coming from. Is it from boosting the probability of picking the preferred response (Logps/chosen) or from reducing the probability of picking the rejected response (Logps/rejected)? The data revealed that DPO gains came mostly from the latter, suppressing the likelihood of the rejected answer. This is called likelihood displacement. Arguably, 
+There was another interesting metric pair: Logps/chosen and Logps/rejected. These provide information where the gains in the rewards/margin metric are coming from. Is it from boosting the probability of picking the preferred response (Logps/chosen) or from reducing the probability of picking the rejected response (Logps/rejected)? The data revealed that DPO gains came mostly from the latter, suppressing the likelihood of the rejected answer. This is called likelihood displacement. Arguably, it would be preferable if margins would grow from both directions at once, less probability for the rejected and higher for the preferred but that was not really the case here. -> see the training output in the notebook.
+
+### Step 6 - Generating a response dataset from all 3 stages
+This is the run up to the final analysis, we're passing the requests to all three model stages: base, SFT and DPO tuned.
+
+### Step 7 - Evaluation of overall performance
+
 
 ```
 ==============================================================================
