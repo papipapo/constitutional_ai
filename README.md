@@ -109,6 +109,8 @@ This is the run up to the final analysis, we're passing the requests to all thre
 
 ### Step 7 - Evaluation of overall performance
 
+Claude refusing the prompt it's supposed to secure.
+the judge model's own protective classifiers can interfere with legitimate evaluation of exactly the content those classifiers exist to catch. That's a substantive observation for a Post-Training-focused conversation, not just a debugging footnote — worth a paragraph in your report rather than being fixed away and forgotten.
 
 ```
 ==============================================================================
