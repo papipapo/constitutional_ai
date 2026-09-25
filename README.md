@@ -2,7 +2,7 @@
 A post-training constitutional AI pipeline 
 
 ## A — Purpose
-
+The abilities of modern frontier AI models are breathtaking but also raise bigger questions on model regulation and control. I was interested in learning about ways of harnessing the creative powers of AI while mitigating the risks they pose. In this process, I discovered the Constitutional AI approach 
 
 ## B — Approach
 
