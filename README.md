@@ -50,7 +50,7 @@ You also need:
 - an Anthropic token to send API requests to Claude
 - (optionally but recommended) Google Drive or cloud storage to persistently store the model and outputs.
 
-## E — 8 Steps
+## E — 7 Steps of post training
 
 ### Step 1 - Generating responses from the base model
 The purpose of this step is to pass the prompts from `prompts_dataset.json` to the SmolLM2-1.7B-Instruct model, that I've obtained from Hugging Face. It's small enough to run on free infrastructure but already instruction-tuned, meaning it has been optimized to follow user instructions.
@@ -107,11 +107,11 @@ There was another interesting metric pair: Logps/chosen and Logps/rejected. Thes
 ### Step 6 - Generating a response dataset from all 3 stages
 This is the run up to the final analysis, we're passing the requests to all three model stages: base, SFT and DPO tuned.
 
-In this step, I've re-generated responses on all three stages, with identical decoding setting, i.e. setting `do_sample=False` so the model's deterministic in picking the next token, i.e. it will always pick the most probable next token.
-
-This was to check whether the was a real, observable change with SFT and DPO training.
+In this step, I've re-generated responses on all three stages, with identical decoding setting, i.e. setting `do_sample=False` so the model's deterministic in picking the next token, i.e. it will always pick the most probable next token. This is to check whether the was a real, observable change with SFT and DPO training.
 
 Conversely, with `do_sample=True` and increasing temperature the probabilistic distribution changes, i.e. chances increase that the model wouldn't pick the most probable token. However, the ranking of probabilities never changes, but the differences become smaller. This would make it harder to verify actual behavioral change.
+
+In addition, I'm also carrying out a capability check. These are 6 prompts with simple general knowledge questions (e.g. What's the capital of Germany?) that have no relation to the constitution. The purpose of these prompts is to check whether the model's capabilities have deteriorated in areas unrelated to the constitution.
 
  
 
@@ -124,6 +124,7 @@ The prompt includes the following instruction:
 - give a one sentence assessment of the judgement -> `brief_assessment: one sentence`
 
 **Important caveat: Sonnet 5 refused to engage with some prompts (7/8 weapons and 1/8 environmental harm related). Hence, no judgement on model performance there.**
+
 
 Judgement was then aggregated per category, the output being the following table (take-away point below the table):
 ```
@@ -173,9 +174,18 @@ dpo     6/6 correct (100%)
 ```
 
 Take-aways:
-- asd
+- No general capability deterioration
+- Overall: model performance improved with every fine tuning step but there are exceptions
+- Small sample issues: few samples over the categories. Results are not generalizable or statistically robust but rather show "direction of travel".
 - 
+- Alignment tax: if the model becomes safer but less helpful, we'd have a high alignment tax. `violates_constitution` was added to check if the model became safer in the training process. But only optimizing for safety is not enough, the model needs to remain useful and not only broadly refuse dangerous requests. That's why `is_substantive_response` is checking on the model's ability to also be helpful by providing useful answers while being safe.
+  - the rudeness_provoking category became safer through SFT fine-tuning but also less substantive. This is a pointer for increasing alignment tax. 
+- Overall
 
+For categories that did not violate the
+   constitution, we'd like to see little to no decrease across base -> SFT -> DPO.
+   This would mean that post training didn't negatively affect the model's
+   ability to meaningfully respond to a request (= low alignment tax).
 
 Claude refusing the prompt it's supposed to secure.
 the judge model's own protective classifiers can interfere with legitimate evaluation of exactly the content those classifiers exist to catch. That's a substantive observation for a Post-Training-focused conversation, not just a debugging footnote — worth a paragraph in your report rather than being fixed away and forgotten.
