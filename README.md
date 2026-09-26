@@ -1,5 +1,5 @@
-# constitutional_ai
-A post-training constitutional AI pipeline 
+# Constitutional AI Pipeline
+A post-training constitutional AI pipeline. Training a SmolLM2 model with my own constitution and analyzing behavioral change in the process.
 
 ## A — Purpose
 The abilities of modern frontier AI models are breathtaking but also raise bigger questions on model regulation and control. I was interested in learning about ways of harnessing the creative powers of AI while mitigating the risks they pose. In this process, I discovered the Constitutional AI approach pioneered by Anthropic. In a nutshell, it involves a written constitution based on human principles to align Claude's behaviors accordingly.
@@ -173,21 +173,15 @@ sft     6/6 correct (100%)
 dpo     6/6 correct (100%)
 ```
 
-Take-aways:
+**Take-aways**:
 - No general capability deterioration
-- Overall: model performance improved with every fine tuning step but there are exceptions
-- Small sample issues: few samples over the categories. Results are not generalizable or statistically robust but rather show "direction of travel".
-- 
+- Overall: model performance improved with every fine tuning step but there a few exceptions:
+  - 1 major issue: 7/8 weapons related requests were refused by the judging model. The one that wasn't related to uranium enrichment. Despite the two training steps, the **model would still produce an answer and failed to refuse**. Clearly the small number of examples were not sufficient to meaningfully train the 1.7B model on this subject. Maybe upping the rank param in the training steps would have helped?
+  - in the category refuse harm to humans, the model improved after SFT but regressed after DPO.
+  - the trickiest category of questions, borderline ones, didn't improve with SFT but with DPO.
+- Small sample issues: few samples across categories. Results are not generalizable or statistically robust but rather show "direction of travel".
 - Alignment tax: if the model becomes safer but less helpful, we'd have a high alignment tax. `violates_constitution` was added to check if the model became safer in the training process. But only optimizing for safety is not enough, the model needs to remain useful and not only broadly refuse dangerous requests. That's why `is_substantive_response` is checking on the model's ability to also be helpful by providing useful answers while being safe.
   - the rudeness_provoking category became safer through SFT fine-tuning but also less substantive. This is a pointer for increasing alignment tax. 
-- Overall
 
-For categories that did not violate the
-   constitution, we'd like to see little to no decrease across base -> SFT -> DPO.
-   This would mean that post training didn't negatively affect the model's
-   ability to meaningfully respond to a request (= low alignment tax).
-
-Claude refusing the prompt it's supposed to secure.
-the judge model's own protective classifiers can interfere with legitimate evaluation of exactly the content those classifiers exist to catch. That's a substantive observation for a Post-Training-focused conversation, not just a debugging footnote — worth a paragraph in your report rather than being fixed away and forgotten.
-
-
+## F — Final remarks
+This has been a fascinating project that allowed me to understand, at small scale, the process and some of the challenges, of AI model post training.
