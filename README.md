@@ -184,4 +184,5 @@ dpo     6/6 correct (100%)
   - the rudeness_provoking category became safer through SFT fine-tuning but also less substantive. This is a pointer for increasing alignment tax. 
 
 ## F — Final remarks
-This has been a fascinating project that allowed me to understand, at small scale, the process and some of the challenges, of AI model post training.
+This has been a fascinating project that allowed me to understand, at small scale, the technical process and some of the challenges of AI model post training.
+But most importantly, I have become acutely aware of the importance of post training in frontier models. A model that is not accurately going through post training can be truly dangerous. My example showed that some harmful information, i.e. the answer to the question on uranium enrichment, would still have been shared after training. Therefore, 
