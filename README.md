@@ -107,7 +107,17 @@ There was another interesting metric pair: Logps/chosen and Logps/rejected. Thes
 ### Step 6 - Generating a response dataset from all 3 stages
 This is the run up to the final analysis, we're passing the requests to all three model stages: base, SFT and DPO tuned.
 
+In this step, I've re-generated responses on all three stages, with identical decoding setting, i.e. setting `do_sample=False` so the model's deterministic in picking the next token, i.e. it will always pick the most probable next token.
+
+This was to check whether the was a real, observable change with SFT and DPO training.
+
+Conversely, with `do_sample=True` and increasing temperature the probabilistic distribution changes, i.e. chances increase that the model wouldn't pick the most probable token. However, the ranking of probabilities never changes, but the differences become smaller. This would make it harder to verify actual behavioral change.
+
+ 
+
 ### Step 7 - Evaluation of overall performance
+
+
 
 Claude refusing the prompt it's supposed to secure.
 the judge model's own protective classifiers can interfere with legitimate evaluation of exactly the content those classifiers exist to catch. That's a substantive observation for a Post-Training-focused conversation, not just a debugging footnote — worth a paragraph in your report rather than being fixed away and forgotten.
